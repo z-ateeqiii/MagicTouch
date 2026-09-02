@@ -1,0 +1,1056 @@
+/* =========================================================================
+   MAGIC TOUCH — Beauty Salon
+   Design tokens → base → layout → components → responsive
+   Palette and type taken from the project storyboard.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1 · DESIGN TOKENS
+   ---------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --bg:          #0F0B08;
+  --bg-soft:     #130E0A;
+  --surface:     #1A1410;
+  --surface-2:   #221A13;
+
+  /* Ink */
+  --text:        #EFE6D6;
+  --cream:       #F4E9C6;
+  --muted:       #A2917C;
+
+  /* Accent */
+  --gold:        #D4A017;
+  --gold-soft:   #E4BC50;
+
+  /* Lines */
+  --line:        rgba(212, 160, 23, .16);
+  --line-soft:   rgba(244, 233, 198, .09);
+
+  /* Type */
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-body:    "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Shape */
+  --radius-sm:   12px;
+  --radius:      18px;
+  --radius-lg:   28px;
+  --radius-pill: 999px;
+
+  /* Rhythm */
+  --header-h:    88px;
+  --container:   1180px;
+  --gutter:      clamp(1.25rem, 4vw, 2.5rem);
+  --section-y:   clamp(4.5rem, 9vw, 8rem);
+
+  /* Motion */
+  --ease:        cubic-bezier(.22, .68, .28, 1);
+  --reveal-delay: 0ms;
+}
+
+/* -------------------------------------------------------------------------
+   2 · BASE
+   ---------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 20px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.7;
+  letter-spacing: .002em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Fine warm grain — keeps large dark areas from looking flat. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img, svg { display: block; max-width: 100%; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.012em;
+  margin: 0;
+  color: var(--cream);
+}
+
+p { margin: 0; }
+ul, dl { margin: 0; padding: 0; list-style: none; }
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  z-index: 200;
+  background: var(--gold);
+  color: #150F09;
+  padding: .6rem 1.2rem;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-size: .85rem;
+  transition: transform .25s var(--ease);
+}
+.skip-link:focus { transform: translate(-50%, 0); }
+
+/* -------------------------------------------------------------------------
+   3 · LAYOUT PRIMITIVES
+   ---------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--section-y); position: relative; }
+
+.section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+.section__title {
+  font-size: clamp(1.95rem, 4.4vw, 3.1rem);
+}
+
+.section__lead {
+  margin-top: .9rem;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: clamp(.94rem, 1.5vw, 1.02rem);
+}
+
+.section__note {
+  color: var(--muted);
+  font-size: .8rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* Prices — the fastest thing to find on the page. */
+.price {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.price--block { margin-top: .55rem; }
+
+.duration {
+  color: var(--muted);
+  font-size: .82rem;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------
+   4 · BUTTONS
+   ---------------------------------------------------------------------- */
+.btn {
+  --btn-py: .85rem;
+  --btn-px: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding: var(--btn-py) var(--btn-px);
+  min-height: 46px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+  cursor: pointer;
+  transition: transform .3s var(--ease), background-color .3s var(--ease),
+              border-color .3s var(--ease), color .3s var(--ease),
+              box-shadow .3s var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn__icon { width: 18px; height: 18px; flex: none; }
+.btn__icon svg { width: 100%; height: 100%; }
+
+.btn--primary {
+  background: var(--gold);
+  color: #150F09;
+  box-shadow: 0 10px 30px -14px rgba(212, 160, 23, .8);
+}
+.btn--primary:hover { background: var(--gold-soft); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--cream);
+  border-color: var(--line-soft);
+}
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold-soft); }
+
+.btn--sm { --btn-py: .6rem; --btn-px: 1.2rem; min-height: 40px; font-size: .82rem; }
+.btn--lg { --btn-py: 1rem; --btn-px: 2.1rem; min-height: 54px; font-size: .95rem; }
+
+/* Per-service booking action. Quiet until you want it — an outline that
+   fills with gold on hover, so ten of them never shout over the prices. */
+.book-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 34px;
+  padding: .3rem .85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--gold);
+  font-size: .76rem;
+  font-weight: 400;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  transition: background-color .3s var(--ease), color .3s var(--ease),
+              border-color .3s var(--ease);
+}
+.book-link__icon { width: 14px; height: 14px; flex: none; }
+.book-link__icon svg { width: 100%; height: 100%; }
+.book-link:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #150F09;
+}
+
+/* "or call …" under the primary calls to action. */
+.hero__phone,
+.cta__phone {
+  margin-top: 1.15rem;
+  color: var(--muted);
+  font-size: .86rem;
+}
+.hero__phone a,
+.cta__phone a {
+  color: var(--cream);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1px;
+  white-space: nowrap;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.hero__phone a:hover,
+.cta__phone a:hover { color: var(--gold-soft); border-color: var(--gold); }
+
+/* -------------------------------------------------------------------------
+   5 · HEADER / NAV
+   ---------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  transition: background-color .4s var(--ease), border-color .4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-scrolled {
+  background: rgba(15, 11, 8, .82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--line-soft);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: var(--header-h);
+}
+
+.brand { display: inline-flex; align-items: center; gap: .7rem; }
+
+/* The supplied logo. `has-logo` is dropped by main.js if the file is
+   missing, which reveals the typographic lockup underneath instead.
+   It is a two-line lockup, so it needs more height than a wordmark
+   would to stay readable. */
+.brand__logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+}
+.brand:not(.has-logo) .brand__logo { display: none; }
+
+/* Beside the logo, keep only "Beauty Salon" — the mark already says the
+   name, but not what the business is. */
+.brand.has-logo .brand__mark,
+.brand.has-logo .brand__name { display: none; }
+.brand.has-logo .brand__sub {
+  margin-top: 0;
+  padding-left: .95rem;
+  border-left: 1px solid var(--line);
+}
+.brand--footer.has-logo .brand__text { display: none; }
+
+.brand__mark { width: 26px; height: 26px; color: var(--gold); flex: none; }
+.brand__mark svg { width: 100%; height: 100%; }
+.brand__text { display: inline-flex; align-items: center; gap: .7rem; }
+.brand__words { display: flex; flex-direction: column; line-height: 1.1; }
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  color: var(--cream);
+  letter-spacing: .01em;
+}
+.brand__name--lg { font-size: clamp(1.5rem, 3vw, 1.9rem); }
+
+.brand__sub {
+  font-size: .58rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: .2rem;
+}
+
+.nav { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.25rem); }
+.nav__list { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 1.9rem); }
+
+.nav__link {
+  position: relative;
+  font-size: .88rem;
+  color: var(--text);
+  opacity: .78;
+  padding-block: .35rem;
+  transition: opacity .25s var(--ease), color .25s var(--ease);
+}
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.nav__link:hover { opacity: 1; color: var(--gold-soft); }
+.nav__link:hover::after { transform: scaleX(1); }
+
+.nav-toggle {
+  display: none;
+  width: 44px; height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-pill);
+  color: var(--cream);
+  cursor: pointer;
+}
+.nav-toggle__bars { display: block; width: 17px; }
+.nav-toggle__bars i {
+  display: block;
+  height: 1px;
+  background: currentColor;
+  transition: transform .3s var(--ease), opacity .2s var(--ease);
+}
+.nav-toggle__bars i + i { margin-top: 4px; }
+
+/* -------------------------------------------------------------------------
+   6 · HERO
+   ---------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100svh;
+  padding-top: 8rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__inner { padding-bottom: clamp(3rem, 8vw, 6rem); }
+
+.hero__title {
+  font-size: clamp(3rem, 11vw, 6.1rem);
+  line-height: .96;
+  letter-spacing: -.028em;
+  text-shadow: 0 2px 40px rgba(15, 11, 8, .55);
+}
+.hero__title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.hero__lead {
+  margin-top: 1.6rem;
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: clamp(.98rem, 1.7vw, 1.08rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-top: 2.2rem;
+}
+
+/* Photographic backdrop, held back by a scrim so the headline stays legible
+   at every width. The scrim is deliberately heavier on the left, where the
+   type sits, and lifts towards the candlelight on the right. */
+.hero__scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+  filter: saturate(.95) contrast(1.02);
+  animation: hero-drift 26s var(--ease) infinite alternate;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(15, 11, 8, .88) 0%, rgba(15, 11, 8, .35) 26%,
+                            rgba(15, 11, 8, .5) 68%, rgba(15, 11, 8, .92) 100%),
+    linear-gradient(96deg, rgba(15, 11, 8, .95) 0%, rgba(15, 11, 8, .86) 42%,
+                           rgba(15, 11, 8, .5) 70%, rgba(15, 11, 8, .34) 100%);
+}
+
+/* A very slow push-in — enough to feel alive, not enough to notice. */
+@keyframes hero-drift {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+.hero__strip {
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  background: rgba(15, 11, 8, .4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.hero__strip-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem clamp(.9rem, 3vw, 2.5rem);
+  padding-block: 1.05rem;
+  color: var(--muted);
+  font-size: clamp(.62rem, 1.6vw, .74rem);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.hero__strip-inner span { white-space: nowrap; }
+.hero__strip-inner i { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: .7; flex: none; }
+
+/* -------------------------------------------------------------------------
+   7 · SERVICES OVERVIEW
+   ---------------------------------------------------------------------- */
+.services { background: var(--bg-soft); border-block: 1px solid var(--line-soft); }
+
+.services__grid {
+  display: grid;
+  gap: clamp(2.25rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.7rem, 1.6vw, 1rem);
+}
+
+.category__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .95rem;
+  height: 100%;
+  min-height: 148px;
+  padding: 1.5rem .85rem;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform .35s var(--ease), background-color .35s var(--ease),
+              border-color .35s var(--ease);
+}
+.category__link:hover {
+  transform: translateY(-4px);
+  background: var(--surface-2);
+  border-color: rgba(212, 160, 23, .38);
+}
+
+.category__icon { width: 34px; height: 34px; color: var(--gold); }
+.category__icon svg {
+  width: 100%; height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.category__name {
+  font-size: .82rem;
+  line-height: 1.45;
+  color: var(--text);
+  letter-spacing: .01em;
+}
+
+/* -------------------------------------------------------------------------
+   8 · MASSAGE SERVICES
+   ---------------------------------------------------------------------- */
+/* The massage list is the centrepiece — held to an editorial measure
+   so rows never stretch into unreadable lines on wide screens. */
+.massage .container { max-width: 1040px; }
+
+.panel {
+  background: linear-gradient(180deg, rgba(34, 26, 19, .55), rgba(19, 14, 10, .55));
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: clamp(.7rem, 1.6vw, 1.15rem);
+}
+
+.massage-list {
+  display: grid;
+  gap: clamp(.6rem, 1.2vw, .8rem);
+}
+
+.massage-item {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  grid-template-areas:
+    "visual name"
+    "visual meta"
+    "desc   desc";
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: .35rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  transition: border-color .35s var(--ease), background-color .35s var(--ease),
+              transform .35s var(--ease);
+}
+.massage-item:hover {
+  border-color: rgba(212, 160, 23, .3);
+  background: var(--surface-2);
+}
+
+.massage-item__name {
+  grid-area: name;
+  font-size: clamp(1.05rem, 2.1vw, 1.22rem);
+  align-self: end;
+}
+
+.massage-item__desc {
+  grid-area: desc;
+  margin-top: .7rem;
+  color: var(--muted);
+  font-size: .855rem;
+  line-height: 1.65;
+}
+
+.massage-item__meta {
+  grid-area: meta;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem .7rem;
+  align-self: start;
+}
+
+/* Abstract service visual — swap for a photo by setting `image` in data.js */
+.service-visual {
+  grid-area: visual;
+  position: relative;
+  width: 60px;
+  aspect-ratio: 1;
+  align-self: start;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(212, 160, 23, .28), transparent 62%),
+    linear-gradient(150deg, #241A11, #14100C 78%);
+}
+.service-visual[data-variant="1"] {
+  background:
+    radial-gradient(circle at 74% 26%, rgba(212, 160, 23, .24), transparent 64%),
+    linear-gradient(210deg, #2A1E13, #14100C 76%);
+}
+.service-visual[data-variant="2"] {
+  background:
+    radial-gradient(circle at 50% 86%, rgba(212, 160, 23, .26), transparent 66%),
+    linear-gradient(120deg, #221910, #14100C 74%);
+}
+
+.service-visual__art {
+  position: absolute;
+  inset: 18%;
+  color: var(--gold-soft);
+  opacity: .82;
+}
+.service-visual__art svg {
+  width: 100%; height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.service-visual__img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--ease);
+}
+.massage-item:hover .service-visual__img { transform: scale(1.07); }
+
+/* A whisper of gold over every thumbnail, so photos from different
+   sources still read as one set. */
+.service-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(155deg, rgba(212, 160, 23, .12), rgba(15, 11, 8, .3));
+}
+
+/* -------------------------------------------------------------------------
+   9 · WELLNESS & BEAUTY
+   ---------------------------------------------------------------------- */
+.wellness { background: var(--bg-soft); border-block: 1px solid var(--line-soft); }
+
+.wellness-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.7rem, 1.6vw, 1.1rem);
+}
+
+.wellness-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform .35s var(--ease), border-color .35s var(--ease);
+}
+.wellness-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 160, 23, .38);
+}
+
+.wellness-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.wellness-card__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--ease);
+}
+/* Fades the photo into the card body so the two read as one object. */
+.wellness-card__media::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 45%;
+  background: linear-gradient(180deg, transparent, var(--surface));
+}
+.wellness-card:hover .wellness-card__media img { transform: scale(1.05); }
+
+.wellness-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: .35rem clamp(.85rem, 2vw, 1.25rem) clamp(1.35rem, 2.5vw, 1.6rem);
+  text-align: center;
+}
+
+.wellness-card__name { font-size: clamp(1rem, 2vw, 1.15rem); }
+
+.wellness-card__note {
+  margin-top: .45rem;
+  color: var(--muted);
+  font-size: .72rem;
+  letter-spacing: .03em;
+}
+
+/* Push the action to the foot of the card so all four line up, whether or
+   not the card carries a supporting note. */
+.wellness-card__body .book-link { margin-top: auto; }
+.wellness-card__body > :nth-last-child(2) { margin-bottom: 1.1rem; }
+
+/* -------------------------------------------------------------------------
+   10 · EXPERIENCE
+   ---------------------------------------------------------------------- */
+.experience__grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.checklist { display: grid; gap: .95rem; margin-top: 2rem; }
+
+.checklist__item {
+  display: flex;
+  align-items: flex-start;
+  gap: .85rem;
+  font-size: .93rem;
+  color: var(--text);
+}
+.checklist__icon { width: 21px; height: 21px; color: var(--gold); flex: none; margin-top: .18rem; }
+.checklist__icon svg {
+  width: 100%; height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ritual-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  min-height: clamp(340px, 48vw, 480px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  isolation: isolate;
+}
+.ritual-card__img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.ritual-card__quote {
+  position: relative;
+  width: 100%;
+  padding: clamp(3.5rem, 8vw, 5rem) clamp(1.5rem, 3vw, 2.25rem) clamp(1.6rem, 3vw, 2.25rem);
+  background: linear-gradient(180deg, transparent, rgba(15, 11, 8, .82) 55%, rgba(15, 11, 8, .95));
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--cream);
+}
+.ritual-card__quote em { font-style: normal; color: var(--gold); }
+
+/* -------------------------------------------------------------------------
+   11 · BOOKING CTA
+   ---------------------------------------------------------------------- */
+.cta { padding-bottom: calc(var(--section-y) * .8); }
+
+.cta__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(2.75rem, 7vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface), var(--bg-soft));
+  overflow: hidden;
+  isolation: isolate;
+}
+.cta__glow {
+  position: absolute;
+  inset: -60% -10% auto -10%;
+  height: 150%;
+  background: radial-gradient(ellipse at 50% 62%, rgba(212, 160, 23, .17), transparent 62%);
+  z-index: -1;
+}
+.cta__title {
+  max-width: 18ch;
+  font-size: clamp(1.9rem, 5vw, 3.2rem);
+}
+.cta__title em { font-style: normal; color: var(--gold); }
+.cta__lead {
+  margin-top: 1.1rem;
+  max-width: 44ch;
+  color: var(--muted);
+  font-size: clamp(.94rem, 1.6vw, 1.02rem);
+}
+.cta__card .btn { margin-top: 2.1rem; }
+
+/* -------------------------------------------------------------------------
+   12 · FOOTER
+   ---------------------------------------------------------------------- */
+.footer { border-top: 1px solid var(--line-soft); background: var(--bg-soft); }
+
+.footer__inner {
+  display: grid;
+  gap: 2.25rem;
+  padding-block: clamp(2.75rem, 6vw, 4rem);
+}
+
+.footer__tagline { margin-top: .6rem; color: var(--muted); font-size: .85rem; }
+
+.footer__meta { display: grid; gap: 1.1rem; }
+.footer__meta-row { display: grid; gap: .2rem; }
+.footer__meta dt {
+  color: var(--gold);
+  font-size: .66rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.footer__meta dd { margin: 0; font-size: .9rem; color: var(--text); }
+
+.footer__link {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1px;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.footer__link:hover { color: var(--gold-soft); border-color: var(--gold); }
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 34px;
+  color: var(--text);
+  font-size: .9rem;
+  transition: color .25s var(--ease);
+}
+.social svg { width: 20px; height: 20px; color: var(--gold); flex: none; }
+.social:hover { color: var(--gold-soft); }
+
+.footer__brand .brand { margin-bottom: .1rem; }
+.footer__brand .brand__logo { height: 84px; }
+
+.footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 2rem;
+  border-top: 1px solid var(--line-soft);
+  padding-block: 1.5rem;
+  color: var(--muted);
+  font-size: .76rem;
+  letter-spacing: .03em;
+}
+
+/* Build credit — present, but never competing with the salon's own details. */
+.footer__credit {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .1rem .55rem;
+}
+.footer__credit a {
+  color: var(--text);
+  white-space: nowrap;
+  transition: color .25s var(--ease);
+}
+.footer__credit a:hover { color: var(--gold-soft); }
+
+/* -------------------------------------------------------------------------
+   13 · REVEAL ANIMATION
+   ---------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity .8s var(--ease) var(--reveal-delay),
+              transform .8s var(--ease) var(--reveal-delay);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* -------------------------------------------------------------------------
+   14 · RESPONSIVE — mobile first, recomposed upward
+   ---------------------------------------------------------------------- */
+
+/* --- Small phones: keep the massage rows breathable --------------- */
+/* Comfortable thumbs come before tight typography on touch screens. */
+@media (max-width: 599px) {
+  .book-link { min-height: 40px; padding-inline: 1.05rem; font-size: .8rem; }
+
+  /* The header has no room for the descriptor beside the mark. */
+  .brand.has-logo .brand__sub { display: none; }
+  .brand__logo { height: 54px; }
+}
+
+@media (max-width: 400px) {
+  .massage-item { column-gap: .8rem; grid-template-columns: 52px minmax(0, 1fr); }
+  .service-visual { width: 52px; }
+  .hero__strip-inner { gap: .7rem; letter-spacing: .12em; }
+}
+
+/* --- Mobile navigation (below 900px) ------------------------------ */
+@media (max-width: 899px) {
+  .nav-toggle { display: inline-flex; }
+
+  /* The headline spans the full width here, so the scrim has to work
+     vertically rather than left-to-right. */
+  .hero__scrim {
+    background:
+      linear-gradient(180deg, rgba(15, 11, 8, .92) 0%, rgba(15, 11, 8, .5) 28%,
+                              rgba(15, 11, 8, .74) 66%, rgba(15, 11, 8, .96) 100%),
+      linear-gradient(96deg, rgba(15, 11, 8, .8), rgba(15, 11, 8, .58));
+  }
+
+  .nav {
+    position: fixed;
+    inset: var(--header-h) 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: .5rem var(--gutter) 1.6rem;
+    background: rgba(15, 11, 8, .96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line-soft);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity .3s var(--ease), transform .3s var(--ease),
+                visibility .3s var(--ease);
+  }
+  .nav__list { flex-direction: column; align-items: stretch; gap: 0; }
+  .nav__link {
+    display: block;
+    padding: .95rem .2rem;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav__link::after { display: none; }
+  .nav__cta { margin-top: 1.4rem; align-self: flex-start; }
+
+  body.nav-open { overflow: hidden; }
+  body.nav-open .nav { opacity: 1; visibility: visible; transform: translateY(0); }
+  body.nav-open .site-header {
+    background: rgba(15, 11, 8, .96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  body.nav-open .nav-toggle__bars i:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  body.nav-open .nav-toggle__bars i:nth-child(2) { opacity: 0; }
+  body.nav-open .nav-toggle__bars i:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+}
+
+/* --- Tablet ------------------------------------------------------- */
+@media (min-width: 600px) {
+  .massage-item {
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "visual name meta"
+      "visual desc meta";
+    align-items: start;
+    column-gap: 1.25rem;
+    padding: 1.15rem 1.35rem;
+  }
+  .service-visual { width: 76px; }
+  .massage-item__name { align-self: center; }
+  .massage-item__desc { margin-top: .45rem; }
+  .massage-item__meta {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: center;
+    gap: .28rem;
+    align-self: center;
+    text-align: right;
+    min-width: 118px;
+    padding-left: clamp(1rem, 3vw, 2rem);
+    margin-left: clamp(1rem, 3vw, 2rem);
+    border-left: 1px solid var(--line-soft);
+  }
+  .massage-item__meta .book-link { margin-top: .5rem; }
+
+  .category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .wellness-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .footer__inner { grid-template-columns: 1fr auto; align-items: start; }
+  .footer__meta { grid-auto-flow: column; gap: 3rem; }
+}
+
+/* --- Desktop ------------------------------------------------------ */
+@media (min-width: 900px) {
+  .nav-toggle { display: none; }
+
+  .services__grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr); }
+  .services__intro .section__lead { max-width: 34ch; }
+
+  .experience__grid { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); }
+
+  .hero__inner { padding-bottom: clamp(4rem, 9vw, 7rem); }
+  .hero__lead { font-size: 1.08rem; }
+}
+
+/* --- Large desktop ------------------------------------------------ */
+@media (min-width: 1024px) {
+  .massage-item {
+    grid-template-columns: 88px minmax(0, 1fr) auto;
+    padding: 1.35rem 1.6rem;
+  }
+  .service-visual { width: 88px; }
+}
+
+@media (min-width: 1500px) {
+  :root { --container: 1300px; }
+  .massage .container { max-width: 1100px; }
+}
+
+/* -------------------------------------------------------------------------
+   15 · MOTION PREFERENCES
+   ---------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
