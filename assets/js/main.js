@@ -24,10 +24,20 @@
     bookingLinks[i].rel = "noopener";
   }
 
+  /* The WhatsApp line is for messaging only, so it is shown as a wa.me
+     link — never as something to dial. */
+  var whatsappLinks = document.querySelectorAll("[data-whatsapp-link]");
+  for (var m = 0; m < whatsappLinks.length; m++) {
+    whatsappLinks[m].href = bookingUrl;
+    whatsappLinks[m].target = "_blank";
+    whatsappLinks[m].rel = "noopener";
+    whatsappLinks[m].textContent = WHATSAPP_DISPLAY;
+  }
+
   var phoneLinks = document.querySelectorAll("[data-phone-link]");
   for (var p = 0; p < phoneLinks.length; p++) {
-    phoneLinks[p].href = "tel:+" + WHATSAPP_NUMBER;
-    phoneLinks[p].textContent = WHATSAPP_DISPLAY;
+    phoneLinks[p].href = "tel:+" + PHONE_NUMBER;
+    phoneLinks[p].textContent = PHONE_DISPLAY;
   }
 
   var socialLinks = document.querySelectorAll("[data-facebook-link]");

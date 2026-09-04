@@ -8,14 +8,20 @@
 /* -----------------------------------------------------------------
    CONTACT / BOOKING
 
-   WHATSAPP_NUMBER is digits only, country code first, no "+" or spaces.
-   It is the single source for every booking button on the page — the
-   hero, the nav, each service card, the closing CTA and the footer.
+   Two separate lines, both digits only, country code first, no "+".
 
-   Displayed to visitors as WHATSAPP_DISPLAY.
+   WHATSAPP_NUMBER — messaging only. Every booking button on the page
+     points here: the hero, the nav, all ten service cards, the closing
+     CTA and the footer. It is never offered as a "call" link.
+
+   PHONE_NUMBER — voice calls. Used by the "or call" links and the
+     footer's phone row.
    ----------------------------------------------------------------- */
-var WHATSAPP_NUMBER  = "201011453004";
-var WHATSAPP_DISPLAY = "+20 10 11453004";
+var WHATSAPP_NUMBER  = "201017673725";
+var WHATSAPP_DISPLAY = "+20 1017673725";
+
+var PHONE_NUMBER  = "201016136187";
+var PHONE_DISPLAY = "+20 1016136187";
 
 /* Prefilled text for the general "book an appointment" buttons.
    Service cards build their own message from the service name. */

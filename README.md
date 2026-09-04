@@ -23,15 +23,26 @@ All content lives in **`assets/js/data.js`**. Nothing else needs touching.
 
 ### WhatsApp and contact
 
+The salon has two lines, and they are kept apart on purpose:
+
 ```js
-var WHATSAPP_NUMBER  = "201011453004";       // digits only, country code first
-var WHATSAPP_DISPLAY = "+20 10 11453004";    // how it is shown to visitors
+var WHATSAPP_NUMBER  = "201017673725";   // messaging + booking, never dialled
+var WHATSAPP_DISPLAY = "+20 1017673725";
+
+var PHONE_NUMBER     = "201016136187";   // voice calls
+var PHONE_DISPLAY    = "+20 1016136187";
+
 var FACEBOOK_URL     = "https://www.facebook.com/p/...";
 ```
 
 `WHATSAPP_NUMBER` drives every booking button on the page — the hero, the nav,
-all ten service cards, the closing CTA and the footer — plus the "or call"
-`tel:` links. Change it in this one place.
+all ten service cards, the closing CTA and the footer's WhatsApp row. It is
+only ever rendered as a `wa.me` link, never as something to dial.
+
+`PHONE_NUMBER` is used by the "or call" lines under the hero and closing CTA,
+and by the footer's phone row, all as `tel:` links.
+
+Change either in this one place.
 
 Each service card opens WhatsApp with its own prefilled message, so you know
 what is being asked for from the first line:
