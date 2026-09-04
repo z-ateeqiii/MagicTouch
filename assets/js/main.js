@@ -45,6 +45,13 @@
     socialLinks[f].href = FACEBOOK_URL;
   }
 
+  var mapLinks = document.querySelectorAll("[data-map-link]");
+  for (var g = 0; g < mapLinks.length; g++) {
+    mapLinks[g].href = MAP_URL;
+    mapLinks[g].target = "_blank";
+    mapLinks[g].rel = "noopener";
+  }
+
   var creditNames = document.querySelectorAll("[data-credit-name]");
   for (var c = 0; c < creditNames.length; c++) {
     creditNames[c].textContent = CREDIT_NAME;

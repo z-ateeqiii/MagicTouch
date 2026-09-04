@@ -33,6 +33,7 @@ var PHONE_NUMBER     = "201016136187";   // voice calls
 var PHONE_DISPLAY    = "+20 1016136187";
 
 var FACEBOOK_URL     = "https://www.facebook.com/p/...";
+var MAP_URL          = "https://www.google.com/maps?q=28.4948287,34.5175578&z=17&hl=en";
 ```
 
 `WHATSAPP_NUMBER` drives every booking button on the page — the hero, the nav,
@@ -43,6 +44,10 @@ only ever rendered as a `wa.me` link, never as something to dial.
 and by the footer's phone row, all as `tel:` links.
 
 Change either in this one place.
+
+`MAP_URL` is the salon's pin. It is linked from the footer's Location row
+and from "Find us on the map" in the booking section, and opens in whatever
+map app the visitor has. To move the pin, replace the coordinates.
 
 Each service card opens WhatsApp with its own prefilled message, so you know
 what is being asked for from the first line:

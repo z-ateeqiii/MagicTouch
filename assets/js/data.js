@@ -28,9 +28,12 @@ var PHONE_DISPLAY = "+20 1016136187";
 var BOOKING_MESSAGE = "Hello Magic Touch, I would like to book an appointment.";
 
 /* -----------------------------------------------------------------
-   SOCIAL
+   SOCIAL & LOCATION
    ----------------------------------------------------------------- */
 var FACEBOOK_URL = "https://www.facebook.com/p/Magic-touch-Dalia-Soliman-100064310432901/";
+
+/* Opens the salon's pin in whatever map app the visitor has. */
+var MAP_URL = "https://www.google.com/maps?q=28.4948287,34.5175578&z=17&hl=en";
 
 /* -----------------------------------------------------------------
    SITE CREDIT  (footer)

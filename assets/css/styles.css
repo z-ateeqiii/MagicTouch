@@ -824,6 +824,23 @@ a { color: inherit; text-decoration: none; }
 }
 .cta__card .btn { margin-top: 2.1rem; }
 
+/* Directions, for anyone deciding whether they can actually get there. */
+.cta__map {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: 1.4rem;
+  padding-bottom: 2px;
+  color: var(--muted);
+  font-size: .84rem;
+  letter-spacing: .01em;
+  border-bottom: 1px solid transparent;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.cta__map-icon { width: 16px; height: 16px; flex: none; color: var(--gold); }
+.cta__map-icon svg { width: 100%; height: 100%; }
+.cta__map:hover { color: var(--cream); border-bottom-color: var(--line); }
+
 /* -------------------------------------------------------------------------
    12 · FOOTER
    ---------------------------------------------------------------------- */
